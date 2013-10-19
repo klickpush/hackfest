@@ -7,10 +7,16 @@ num_songs = []
 top_songs = []
 
 
-bpm = 80
+  # var get_url = "http://developer.echonest.com/api/v4/song/search?api_key=" + echonestApiKey 
+  # + "&format=json&min_tempo=" + bpm + "&max_tempo=" + bpm + 
+  # "&bucket=id:spotify-WW&bucket=audio_summary&bucket=tracks&sort=song_hotttnesss-desc"
+
+
+bpm = 135
 req_str = ("http://developer.echonest.com/api/v4/song/search?api_key=PGFOUPJMLMTIHEQEX"
-    "&format=json&bucket=tracks&bucket=audio_summary&bucket=id:spotify-WW"
-    "&min_tempo="+ str(bpm) +"&max_tempo="+ str(bpm) + "&sort=song_hotttnesss-desc&results=100")
+    "&format=json&min_tempo="+ str(bpm) +"&max_tempo="+ str(bpm) + 
+    "&bucket=id:spotify-WW&bucket=audio_summary&bucket=tracks&sort=song_hotttnesss-desc")
+# &results=100
 req = urllib2.Request(req_str)
 opener = urllib2.build_opener()
 f = opener.open(req)
