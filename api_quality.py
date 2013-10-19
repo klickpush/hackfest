@@ -14,10 +14,10 @@ import pandas as pd
 num_songs = []
 top_songs = []
 
-for bpm in xrange(20, 300):
+for bpm in xrange(60, 200):
     req_str = ("http://developer.echonest.com/api/v4/song/search?api_key=PGFOUPJMLMTIHEQEX"
         "&format=json&min_tempo="+ str(bpm) +"&max_tempo="+ str(bpm) + 
-        "&bucket=id:spotify-WW&bucket=audio_summary&bucket=tracks&sort=song_hotttnesss-desc")
+        "&bucket=id:spotify-WW&bucket=audio_summary&bucket=tracks&sort=artist_familiarity-desc")
     # &results=100
     req = urllib2.Request(req_str)
     opener = urllib2.build_opener()
@@ -41,7 +41,7 @@ for bpm in xrange(20, 300):
     time.sleep(4)
 
     song_stats = pd.DataFrame({ '#songs query' : num_songs, 'songs' : top_songs })
-    song_stats.to_csv('song_queries.csv')
+    song_stats.to_csv('song_queries(familiarity).csv')
 
 
 
