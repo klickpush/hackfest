@@ -128,28 +128,32 @@
           url: get_url,
           dataType: 'json',
           success: function(datas) {
+            var variable = '';
 
             for (var i = 0; i < datas.response.songs.length; i++) {
               if(datas.response.songs[i]['tracks'] !== undefined) {
-                // for (var ia = 0; ia < datas.response.songs[i]['tracks'].length; ia++) {
                 if(datas.response.songs[i]['tracks'][0] !== undefined) {
                   if( datas.response.songs[i]['tracks'][0]['foreign_id'] !== undefined ) {
-                    var variable = datas.response.songs[i]['tracks'][0]['foreign_id'];
-
-                    var link = 'https://embed.spotify.com/?uri=spotify:track:' + variable.substr(17);
-                    var iframe = document.createElement('iframe');
-                    iframe.frameBorder=0;
-                    iframe.width="300px";
-                    iframe.height="250px";
-                    iframe.setAttribute("src", link);
-                    document.getElementById("ad54").appendChild(iframe);
-
-                    console.log(link);
+                    var variable = variable + datas.response.songs[i]['tracks'][0]['foreign_id'].substr(17) + ',';
                   }
                 }
               }
                 //Do something
             }
+            variable = variable.substring(0, variable.length - 1);
+            console.log(variable);
+
+            var link = 'https://embed.spotify.com/?uri=spotify:trackset:' + variable.substr(17);
+            var iframe = document.createElement('iframe');
+            iframe.frameBorder=0;
+            iframe.width="500px";
+            iframe.height="250px";
+            iframe.setAttribute("src", link);
+            document.getElementById("ad54").appendChild(iframe);
+
+            console.log(link);
+
+
 
           },
           error: function(XMLHttpRequest, textStatus, errorThrown) {
