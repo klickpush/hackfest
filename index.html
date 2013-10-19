@@ -131,9 +131,10 @@
 
             for (var i = 0; i < datas.response.songs.length; i++) {
               if(datas.response.songs[i]['tracks'] !== undefined) {
-                for (var ia = 0; ia < datas.response.songs[i]['tracks'].length; ia++) {
-                  if( datas.response.songs[i]['tracks'][ia]['foreign_id'] !== undefined ) {
-                    var variable = datas.response.songs[i]['tracks'][ia]['foreign_id'];
+                // for (var ia = 0; ia < datas.response.songs[i]['tracks'].length; ia++) {
+                if(datas.response.songs[i]['tracks'][0] !== undefined) {
+                  if( datas.response.songs[i]['tracks'][0]['foreign_id'] !== undefined ) {
+                    var variable = datas.response.songs[i]['tracks'][0]['foreign_id'];
 
                     var link = 'https://embed.spotify.com/?uri=spotify:track:' + variable.substr(17);
                     var iframe = document.createElement('iframe');
