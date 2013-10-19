@@ -16,13 +16,18 @@
         
         </textarea>
       </div>
-
+      <input type="hidden" id="starting_time" value="">
       <h2>Count: <span name="bpm_count" id="bpm_count">0</span></h2>
       <h2>BPM: <span name="bpm_calculated" id="bpm_calculated">0</span></h2>
 
     </div><!-- /.container -->
 
     <script type="text/javascript">
+      $(window).load(function () {
+        var timeInMs = Date.now();
+        $('#starting_time').text(timeInMs);
+      });
+
       $('#bpm').on("keypress", function() {
         var cur_count_str = $('#bpm_count').text();
         var cur_count = parseInt(cur_count_str) + 1;
@@ -31,21 +36,29 @@
 
 
       var count=10;
-      var counter=setInterval(timer, 1000); //1000 will  run it every 1 second
+      var counter=setInterval(timer, 500); //1000 will  run it every 1 second
 
       function timer() {
         count=count-1;
         if (count <= 0) {
-           clearInterval(counter);
-           calculateBPM();
+           // clearInterval(counter);
+           // calculateBPM();
+           count = 10;
            return;
         }
-        $("#countdn").text('0'+count);
       };
 
-      function calculateBPM(current_count, time_elapsed) {
-        alert('working');
-      }
+      function calculateBPM() {
+        var cur_count_str = $('#bpm_count').text();
+        var cur_count = parseInt(cur_count_str);
+        var begin_time = $('#starting_time').text();
+        var end_time = Date.now();
+        var diff_time = end_time - begin_time;
+        alert(begin_time);
+        alert(end_time);
+        $('#bpm_calculated').html(begin_time);
+        // alert(end_time);
+      };
 
 
     </script>
