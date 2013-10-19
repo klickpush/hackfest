@@ -120,7 +120,7 @@
       function getSong(bpm) {
         var echonestApiKey = 'HMIPHAC0X2ZWDG9AO';
         // http://developer.echonest.com/api/v4/song/search?api_key=HMIPHAC0X2ZWDG9AO&format=json&min_tempo=181.19337706966573&max_tempo=181.19337706966573&bucket=id:spotify-WW&bucket=audio_summary&bucket=tracks
-        var get_url = "http://developer.echonest.com/api/v4/song/search?api_key=" + echonestApiKey + "&format=json&min_tempo=" + bpm + "&max_tempo=" + bpm + "&bucket=id:spotify-WW&bucket=audio_summary&bucket=tracks"
+        var get_url = "http://developer.echonest.com/api/v4/song/search?api_key=" + echonestApiKey + "&format=json&min_tempo=" + bpm + "&max_tempo=" + bpm + "&bucket=id:spotify-WW&bucket=audio_summary&bucket=tracks&sort=song_hotttnesss-desc"
         console.log(get_url);
 
 
