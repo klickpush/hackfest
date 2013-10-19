@@ -20,13 +20,13 @@
       <input type="hidden" id="starting_time" value="">
       <h2>Count: <span name="bpm_count" id="bpm_count">0</span></h2>
       <h2>BPM: <span name="bpm_calculated" id="bpm_calculated">0</span></h2>
-      <div>
+      <div style="display: none;">
         <ul id="bpm_data">
           <li>0</li>
         </ul>
       </div>
 
-      <canvas id="myChart" width="400" height="400"></canvas>
+      <canvas id="myChart" width="800" height="500"></canvas>
 
     </div><!-- /.container -->
 
@@ -42,12 +42,25 @@
         $('#bpm_count').html(cur_count);
       })
 
-      var counter=setInterval(timer, 10000); //1000 will  run it every 1 second
+      var counter=setInterval(timer, 3000); //1000 will  run it every 1 second
 
       function timer() {
         var bpm = calculateBPM();
-        $("#bpm_data").append('<li>' + bpm + '</li>');
+        recordBpm(bpm);
+        drawGraph();
         return;
+      };
+
+      function recordBpm(bpm) {
+        $("#bpm_data").append('<li>' + bpm + '</li>');
+      }
+
+      function readBpm() {
+        var bpmData = [];
+        $("#bpm_data li").each(function(idx, li){
+          bpmData.push(li.innerHTML);
+        });
+        return bpmData;
       };
 
       function calculateBPM() {
@@ -63,6 +76,38 @@
       };
 
 
+      function drawGraph() {
+        var bpm_data = readBpm();
+
+
+        var arr = [];
+        for(var i=1; i<=bpm_data.length; i++) {
+         arr.push(i.toString());
+        }
+
+        var data = {
+          labels : arr,
+          datasets : [
+            {
+              fillColor : "rgba(220,220,220,0.5)",
+              strokeColor : "rgba(220,220,220,1)",
+              pointColor : "rgba(220,220,220,1)",
+              pointStrokeColor : "#fff",
+              data : bpm_data
+            }
+          ]
+        }
+        var ctx = $("#myChart").get(0).getContext("2d");
+        //This will get the first returned node in the jQuery collection.
+        var myNewChart = new Chart(ctx);
+        myNewChart.Line(data);
+        var reset_canvas = document.getElementById("myChart");
+        reset_canvas.width = 800;
+        reset_canvas.height = 500;
+
+      }
+
+
       // function getSong(bpm) {
       //   var echonestApiKey = 'V25FGXXBZGHBW8X1X';
       //   // http://developer.echonest.com/api/v4/song/search?api_key=V25FGXXBZGHBW8X1X&format=json&min_tempo=181.19337706966573&max_tempo=181.19337706966573&bucket=id:spotify-WW&bucket=audio_summary&bucket=tracks
@@ -76,31 +121,31 @@
       //   });
       // }
 
-      function parseResults() {
+      // function parseResults() {
 
-      }
+      // }
 
-      var data = {
-        labels : ["January","February","March","April","May","June","July"],
-        datasets : [
-          {
-            fillColor : "rgba(220,220,220,0.5)",
-            strokeColor : "rgba(220,220,220,1)",
-            pointColor : "rgba(220,220,220,1)",
-            pointStrokeColor : "#fff",
-            data : [65,59,90,81,56,55,40]
-          },
-          {
-            fillColor : "rgba(151,187,205,0.5)",
-            strokeColor : "rgba(151,187,205,1)",
-            pointColor : "rgba(151,187,205,1)",
-            pointStrokeColor : "#fff",
-            data : [28,48,40,19,96,27,100]
-          }
-        ]
-      }
+      // var data = {
+      //   labels : ["January","February","March","April","May","June","July"],
+      //   datasets : [
+      //     {
+      //       fillColor : "rgba(220,220,220,0.5)",
+      //       strokeColor : "rgba(220,220,220,1)",
+      //       pointColor : "rgba(220,220,220,1)",
+      //       pointStrokeColor : "#fff",
+      //       data : [65,59,90,81,56,55,40]
+      //     },
+      //     {
+      //       fillColor : "rgba(151,187,205,0.5)",
+      //       strokeColor : "rgba(151,187,205,1)",
+      //       pointColor : "rgba(151,187,205,1)",
+      //       pointStrokeColor : "#fff",
+      //       data : [28,48,40,19,96,27,100]
+      //     }
+      //   ]
+      // }
 
-      //Get context with jQuery - using jQuery's .get() method.
+      // //Get context with jQuery - using jQuery's .get() method.
       // var ctx = $("#myChart").get(0).getContext("2d");
       // //This will get the first returned node in the jQuery collection.
       // var myNewChart = new Chart(ctx);

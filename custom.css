@@ -5,3 +5,11 @@ body {
   padding: 40px 15px;
   text-align: center;
 }
+
+#myChart,
+canvas {
+width: 100% !important;
+max-width: 400%;
+height: auto !important;
+
+}
