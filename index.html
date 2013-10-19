@@ -13,7 +13,7 @@
         <h1>The most annoying blogging app ever.</h1>
         <p class="lead">As you type, we will play music for you.</p>
 
-        <textarea name="bpm" id="bpm" rows="4" cols="50">
+        <textarea name="bpm" id="bpm" rows="4" cols="120">
         
         </textarea>
       </div>
@@ -26,6 +26,10 @@
         </ul>
       </div>
 
+      <div id="ad54">
+
+      </div>
+
       <canvas id="myChart" width="800" height="500"></canvas>
 
     </div><!-- /.container -->
@@ -36,13 +40,17 @@
         $('#starting_time').text(timeInMs);
       });
 
-      $('#bpm').on("keypress", function() {
+      var counter=setInterval(timer, 500); //1000 will  run it every 1 second
+
+      $('#bpm').on("keypress", function(event) {
         var cur_count_str = $('#bpm_count').text();
         var cur_count = parseInt(cur_count_str) + 1;
         $('#bpm_count').html(cur_count);
+        if(event.charCode == 13) {
+          getSong(calculateBPM());
+          clearInterval(counter);
+        }
       })
-
-      var counter=setInterval(timer, 500); //1000 will  run it every 1 second
 
       function timer() {
         var bpm = calculateBPM();
@@ -109,22 +117,58 @@
       }
 
 
-      // function getSong(bpm) {
-      //   var echonestApiKey = 'V25FGXXBZGHBW8X1X';
-      //   // http://developer.echonest.com/api/v4/song/search?api_key=V25FGXXBZGHBW8X1X&format=json&min_tempo=181.19337706966573&max_tempo=181.19337706966573&bucket=id:spotify-WW&bucket=audio_summary&bucket=tracks
-      //   var get_url = "http://developer.echonest.com/api/v4/song/search?api_key=" + echonestApiKey + "&format=json&min_tempo=" + bpm + "&max_tempo=" + bpm + "&bucket=id:spotify-WW&bucket=audio_summary&bucket=tracks"
-      //   console.log(get_url);
-      //   $.getJSON(get_url,function(result) {
-      //       if (result){
-      //         parseResults();
-      //         console.log(result.responseJSON.resonse.songs);
-      //       }
-      //   });
-      // }
+      function getSong(bpm) {
+        var echonestApiKey = 'HMIPHAC0X2ZWDG9AO';
+        // http://developer.echonest.com/api/v4/song/search?api_key=HMIPHAC0X2ZWDG9AO&format=json&min_tempo=181.19337706966573&max_tempo=181.19337706966573&bucket=id:spotify-WW&bucket=audio_summary&bucket=tracks
+        var get_url = "http://developer.echonest.com/api/v4/song/search?api_key=" + echonestApiKey + "&format=json&min_tempo=" + bpm + "&max_tempo=" + bpm + "&bucket=id:spotify-WW&bucket=audio_summary&bucket=tracks"
+        console.log(get_url);
 
-      // function parseResults() {
 
-      // }
+        $.ajax({
+          url: get_url,
+          dataType: 'json',
+          success: function(datas) {
+
+            for (var i = 0; i < datas.response.songs.length; i++) {
+              if(datas.response.songs[i]['tracks'] !== undefined) {
+                for (var ia = 0; ia < datas.response.songs[i]['tracks'].length; ia++) {
+                  if( datas.response.songs[i]['tracks'][ia]['foreign_id'] !== undefined ) {
+                    var variable = datas.response.songs[i]['tracks'][ia]['foreign_id'];
+
+                    var link = 'https://embed.spotify.com/?uri=spotify:track:' + variable.substr(17);
+                    var iframe = document.createElement('iframe');
+                    iframe.frameBorder=0;
+                    iframe.width="300px";
+                    iframe.height="250px";
+                    iframe.setAttribute("src", link);
+                    document.getElementById("ad54").appendChild(iframe);
+
+                    console.log(link);
+                  }
+                }
+              }
+                //Do something
+            }
+
+          },
+          error: function(XMLHttpRequest, textStatus, errorThrown) {
+            console.log(textStatus, errorThrown);
+          }
+        });
+
+        // var tmp_response = $.getJSON(get_url);
+        // console.log(tmp_response);
+        // tmp_response.response.songs.each(function(idx, li){
+        //   alert(li);
+        // });
+        // return response;
+      }
+
+      function parseResults(songs) {
+        console.log(songs);
+        alert(songs);
+        // console.log(songs);
+      }
 
       // var data = {
       //   labels : ["January","February","March","April","May","June","July"],
