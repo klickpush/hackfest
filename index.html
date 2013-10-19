@@ -42,7 +42,7 @@
         $('#bpm_count').html(cur_count);
       })
 
-      var counter=setInterval(timer, 3000); //1000 will  run it every 1 second
+      var counter=setInterval(timer, 500); //1000 will  run it every 1 second
 
       function timer() {
         var bpm = calculateBPM();
@@ -100,7 +100,8 @@
         var ctx = $("#myChart").get(0).getContext("2d");
         //This will get the first returned node in the jQuery collection.
         var myNewChart = new Chart(ctx);
-        myNewChart.Line(data);
+        var options = { animation : false };
+        myNewChart.Line(data, options);
         var reset_canvas = document.getElementById("myChart");
         reset_canvas.width = 800;
         reset_canvas.height = 500;
