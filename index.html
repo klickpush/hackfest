@@ -12,17 +12,48 @@
         <h1>The most annoying blogging app ever.</h1>
         <p class="lead">As you type, we will play music for you.</p>
 
-        <textarea rows="4" cols="50">
+        <textarea name="bpm" id="bpm" rows="4" cols="50">
         
         </textarea>
       </div>
 
+      <h2>Count: <span name="bpm_count" id="bpm_count">0</span></h2>
+      <h2>BPM: <span name="bpm_calculated" id="bpm_calculated">0</span></h2>
+
     </div><!-- /.container -->
+
+    <script type="text/javascript">
+      $('#bpm').on("keypress", function() {
+        var cur_count_str = $('#bpm_count').text();
+        var cur_count = parseInt(cur_count_str) + 1;
+        $('#bpm_count').html(cur_count);
+      })
+
+
+      var count=10;
+      var counter=setInterval(timer, 1000); //1000 will  run it every 1 second
+
+      function timer() {
+        count=count-1;
+        if (count <= 0) {
+           clearInterval(counter);
+           calculateBPM();
+           return;
+        }
+        $("#countdn").text('0'+count);
+      };
+
+      function calculateBPM(current_count, time_elapsed) {
+        alert('working');
+      }
+
+
+    </script>
 
     
     <script type="text/javascript">
       $( "#result" ).load( "ajax/test.html", function() {
-        alert( "Load was performed." );
+
       });
     </script>
 
