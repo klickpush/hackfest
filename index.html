@@ -12,12 +12,10 @@
       <div class="starter-template">
         <h1>The most annoying blogging app ever.</h1>
         <p class="lead">As you type, we will play music for you.</p>
-
-        <textarea name="bpm" id="bpm" rows="4" cols="120">
-        
-        </textarea>
+        <textarea name="bpm" id="bpm" rows="4" cols="120"></textarea>
       </div>
-      <input type="hidden" id="starting_time" value="">
+      <input type="hidden" id="starting_time" value="" />
+      <input type="hidden" id="first_key_stoke" value="true" />
       <h2>Count: <span name="bpm_count" id="bpm_count">0</span></h2>
       <h2>BPM: <span name="bpm_calculated" id="bpm_calculated">0</span></h2>
       <div style="display: none;">
@@ -35,14 +33,24 @@
     </div><!-- /.container -->
 
     <script type="text/javascript">
-      $(window).load(function () {
-        var timeInMs = Date.now();
-        $('#starting_time').text(timeInMs);
-      });
+      // $(window).load(function () {
+      //   var timeInMs = Date.now();
+      //   $('#starting_time').text(timeInMs);
+      // });
 
-      var counter=setInterval(timer, 500); //1000 will  run it every 1 second
+      var counter;
+
+      function first_key() {
+        var timeInMs = Date.now();
+        $('#first_key_stoke').val('false');
+        $('#starting_time').text(timeInMs);
+        counter=setInterval(timer, 500); //1000 will  run it every 1 second
+      }
 
       $('#bpm').on("keypress", function(event) {
+        if( $('#first_key_stoke').val() == 'true' ) {
+          first_key();
+        }
         var cur_count_str = $('#bpm_count').text();
         var cur_count = parseInt(cur_count_str) + 1;
         $('#bpm_count').html(cur_count);
