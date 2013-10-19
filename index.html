@@ -51,12 +51,13 @@
       function calculateBPM() {
         var cur_count_str = $('#bpm_count').text();
         var cur_count = parseInt(cur_count_str);
-        var begin_time = $('#starting_time').text();
+        var begin_time = $('input#starting_time').text();
+        begin_time = parseInt(begin_time);
         var end_time = Date.now();
         var diff_time = end_time - begin_time;
         // alert(begin_time);
         // alert(end_time);
-        $('#bpm_calculated').html(begin_time);
+        $('#bpm_calculated').html(diff_time);
         // alert(end_time);
       };
 
