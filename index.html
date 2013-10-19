@@ -88,7 +88,7 @@
         begin_time = parseInt(begin_time);
         var end_time = Date.now();
         var diff_time = end_time - begin_time;
-        var bpm = cur_count / (diff_time/1000/60);
+        var bpm = Math.round(cur_count / (diff_time/1000/60));
         $('#bpm_calculated').html(bpm);
         return bpm;
       };

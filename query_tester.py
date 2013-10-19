@@ -12,7 +12,7 @@ top_songs = []
   # "&bucket=id:spotify-WW&bucket=audio_summary&bucket=tracks&sort=song_hotttnesss-desc"
 
 
-bpm = 135
+bpm = 194.5595388218339
 req_str = ("http://developer.echonest.com/api/v4/song/search?api_key=PGFOUPJMLMTIHEQEX"
     "&format=json&min_tempo="+ str(bpm) +"&max_tempo="+ str(bpm) + 
     "&bucket=id:spotify-WW&bucket=audio_summary&bucket=tracks&sort=song_hotttnesss-desc")
