@@ -54,8 +54,10 @@
         var cur_count_str = $('#bpm_count').text();
         var cur_count = parseInt(cur_count_str) + 1;
         $('#bpm_count').html(cur_count);
-        if(event.charCode == 13) {
+        if(event.charCode == 13) { // 13 is return
           getSong(calculateBPM());
+          $('#bpm_count').html('0');
+          $('#first_key_stoke').val('true');
           clearInterval(counter);
         }
       })
@@ -86,7 +88,7 @@
         begin_time = parseInt(begin_time);
         var end_time = Date.now();
         var diff_time = end_time - begin_time;
-        var bpm = cur_count / (diff_time/1000/60)
+        var bpm = cur_count / (diff_time/1000/60);
         $('#bpm_calculated').html(bpm);
         return bpm;
       };
@@ -94,6 +96,7 @@
 
       function drawGraph() {
         var bpm_data = readBpm();
+        console.log(bpm_data);
 
 
         var arr = [];
@@ -113,6 +116,7 @@
             }
           ]
         }
+
         var ctx = $("#myChart").get(0).getContext("2d");
         //This will get the first returned node in the jQuery collection.
         var myNewChart = new Chart(ctx);
@@ -155,7 +159,7 @@
             var iframe = document.createElement('iframe');
             iframe.frameBorder=0;
             iframe.width="500px";
-            iframe.height="250px";
+            // iframe.height="250px";
             iframe.setAttribute("src", link);
             document.getElementById("ad54").appendChild(iframe);
 
