@@ -10,13 +10,13 @@
     <div class="container">
 
       <div class="starter-template">
-        <h1>The most annoying blogging app ever.</h1>
-        <p class="lead">As you type, we will play music for you.</p>
+        <h1>BPM reader (formally known as FaceMelter)</h1>
+        <p class="lead">Tap your beat, to get the BEATS.</p>
         <textarea name="bpm" id="bpm" rows="4" cols="120"></textarea>
       </div>
       <input type="hidden" id="starting_time" value="" />
       <input type="hidden" id="first_key_stoke" value="true" />
-      <h2>Count: <span name="bpm_count" id="bpm_count">0</span></h2>
+      <h2 style="display: none;">Count: <span name="bpm_count" id="bpm_count">0</span></h2>
       <h2>BPM: <span name="bpm_calculated" id="bpm_calculated">0</span></h2>
       <div style="display: none;">
         <ul id="bpm_data">
@@ -131,8 +131,10 @@
 
       function getSong(bpm) {
         var echonestApiKey = 'HMIPHAC0X2ZWDG9AO';
+        var min_bpm = parseInt(bpm) - 2;
+        var max_bpm = parseInt(bpm) + 2;
         // http://developer.echonest.com/api/v4/song/search?api_key=HMIPHAC0X2ZWDG9AO&format=json&min_tempo=181.19337706966573&max_tempo=181.19337706966573&bucket=id:spotify-WW&bucket=audio_summary&bucket=tracks
-        var get_url = "http://developer.echonest.com/api/v4/song/search?api_key=" + echonestApiKey + "&format=json&min_tempo=" + bpm + "&max_tempo=" + bpm + "&bucket=id:spotify-WW&bucket=audio_summary&bucket=tracks&sort=song_hotttnesss-desc"
+        var get_url = "http://developer.echonest.com/api/v4/song/search?api_key=" + echonestApiKey + "&format=json&min_tempo=" + min_bpm.toString() + "&max_tempo=" + max_bpm.toString() + "&bucket=id:spotify-WW&bucket=audio_summary&bucket=tracks&sort=song_hotttnesss-desc"
         console.log(get_url);
 
 
