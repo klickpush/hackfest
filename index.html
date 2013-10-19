@@ -17,7 +17,7 @@
         </textarea>
       </div>
       <input type="hidden" id="starting_time" value="">
-      <h2>Count: <span name="bpm_count" id="bpm_count">0</span></h2>
+      <h2>Count: <span name="bpm_count" id="bpm_count">1</span></h2>
       <h2>BPM: <span name="bpm_calculated" id="bpm_calculated">0</span></h2>
 
     </div><!-- /.container -->
@@ -34,18 +34,11 @@
         $('#bpm_count').html(cur_count);
       })
 
-
-      var count=10;
-      var counter=setInterval(timer, 500); //1000 will  run it every 1 second
+      var counter=setInterval(timer, 1000); //1000 will  run it every 1 second
 
       function timer() {
-        count=count-1;
-        if (count <= 0) {
-           // clearInterval(counter);
-           calculateBPM();
-           count = 10;
-           return;
-        }
+        calculateBPM();
+        return;
       };
 
       function calculateBPM() {
@@ -55,9 +48,8 @@
         begin_time = parseInt(begin_time);
         var end_time = Date.now();
         var diff_time = end_time - begin_time;
-        // alert(begin_time);
-        // alert(end_time);
-        $('#bpm_calculated').html(diff_time);
+        var bpm = cur_count / (diff_time/1000/60)
+        $('#bpm_calculated').html(bpm);
         // alert(end_time);
       };
 
