@@ -17,7 +17,7 @@
         </textarea>
       </div>
       <input type="hidden" id="starting_time" value="">
-      <h2>Count: <span name="bpm_count" id="bpm_count">1</span></h2>
+      <h2>Count: <span name="bpm_count" id="bpm_count">0</span></h2>
       <h2>BPM: <span name="bpm_calculated" id="bpm_calculated">0</span></h2>
 
     </div><!-- /.container -->
@@ -34,7 +34,7 @@
         $('#bpm_count').html(cur_count);
       })
 
-      var counter=setInterval(timer, 1000); //1000 will  run it every 1 second
+      var counter=setInterval(timer, 10000); //1000 will  run it every 1 second
 
       function timer() {
         calculateBPM();
@@ -50,18 +50,24 @@
         var diff_time = end_time - begin_time;
         var bpm = cur_count / (diff_time/1000/60)
         $('#bpm_calculated').html(bpm);
-        // alert(end_time);
+        getSong(bpm);
       };
 
 
-    </script>
+      function getSong(bpm) {
+        var echonestApiKey = 'V25FGXXBZGHBW8X1X';
+        // http://developer.echonest.com/api/v4/song/search?api_key=V25FGXXBZGHBW8X1X&format=json&min_tempo=181.19337706966573&max_tempo=181.19337706966573&bucket=id:spotify-WW&bucket=audio_summary&bucket=tracks
+        var get_url = "http://developer.echonest.com/api/v4/song/search?api_key=" + echonestApiKey + "&format=json&min_tempo=" + bpm + "&max_tempo=" + bpm + "&bucket=id:spotify-WW&bucket=audio_summary&bucket=tracks"
+        console.log(get_url);
+        $.getJSON(get_url,function(result) {
+            if (result){
+              console.log(result.responseJSON.resonse.songs);
+            }
+        });
+      }
+   </script>
 
-    
-    <script type="text/javascript">
-      $( "#result" ).load( "ajax/test.html", function() {
-
-      });
-    </script>
+   <iframe id="myiframe" src="https://embed.spotify.com/?uri=spotify:track:5CgZDknwZ24qvhq9cgI0vT" frameborder="0" allowtransparency="true">
 
     <script src="http:////netdna.bootstrapcdn.com/bootstrap/3.0.0/js/bootstrap.min.js"></script>
   </body>
